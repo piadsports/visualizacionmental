@@ -1,0 +1,587 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout>
+  <div class="header">
+    <div class="shield-wrap">
+      <svg class="shield shield-svg" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.95" />
+            <stop offset="100%" style="stop-color:#e8f7e7;stop-opacity:0.8" />
+          </linearGradient>
+        </defs>
+        <path d="M 50 10 L 85 30 L 85 65 Q 50 100 50 100 Q 50 100 15 65 L 15 30 Z" fill="url(#shieldGrad)" stroke="#2a8a26" stroke-width="1.5"/>
+        <text x="50" y="60" font-family="Arial, sans-serif" font-size="32" font-weight="bold" text-anchor="middle" fill="#3aaa35">S</text>
+      </svg>
+    </div>
+    <h1>FC Sporting Company</h1>
+    <h2>Visualización Mental</h2>
+    <p>Tu guion personalizado de rendimiento</p>
+  </div>
+
+  <div class="progress-wrap" id="progressWrap" style="display:none">
+    <div class="progress-label">
+      <span>Pregunta <span id="progressCurrent">1</span> de 8</span>
+      <span id="progressPct">0%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+
+  <!-- PAGE 0: INTRO -->
+  <div class="page active" id="page-intro">
+    <div class="intro-card">
+      <h3>Bienvenido</h3>
+      <p>Este formulario te ayudará a crear tu <strong>guion personalizado de visualización mental</strong> basado en tus características como futbolista.</p>
+      <p>Responde de manera honesta y reflexiva. Te haremos 8 preguntas que nos permitirán generar un guion único para ti.</p>
+      <ul class="steps-list">
+        <li><span class="step-num">1</span> Cuéntanos tu posición en el campo</li>
+        <li><span class="step-num">2</span> Describe tu momento imparable</li>
+        <li><span class="step-num">3</span> Selecciona tu estado emocional deseado</li>
+        <li><span class="step-num">4</span> Identifica una acción a fortalecer</li>
+        <li><span class="step-num">5</span> Describe cómo reaccionas ahora ante errores</li>
+        <li><span class="step-num">6</span> Diseña tu reacción ideal ante adversidades</li>
+        <li><span class="step-num">7</span> Crea tu frase de activación</li>
+        <li><span class="step-num">8</span> Comparte tu nombre</li>
+      </ul>
+    </div>
+    <button class="btn-primary" onclick="startForm()">Comenzar →</button>
+  </div>
+
+  <!-- PAGE 1: Posición -->
+  <div class="page" id="page-1">
+    <div class="q-card">
+      <div class="q-number">PREGUNTA 1</div>
+      <div class="q-title">¿Cuál es tu posición en el campo?</div>
+      <div class="q-hint">Selecciona una o más posiciones en las que juegas</div>
+      <div class="options-grid" id="posiciones">
+        <button class="option-btn" onclick="toggleOption(this, 'posiciones')">
+          <div class="option-check"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8L11 1" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <span>Portero</span>
+        </button>
+        <button class="option-btn" onclick="toggleOption(this, 'posiciones')">
+          <div class="option-check"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8L11 1" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <span>Defensa Central</span>
+        </button>
+        <button class="option-btn" onclick="toggleOption(this, 'posiciones')">
+          <div class="option-check"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8L11 1" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <span>Lateral Izquierdo</span>
+        </button>
+        <button class="option-btn" onclick="toggleOption(this, 'posiciones')">
+          <div class="option-check"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8L11 1" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <span>Lateral Derecho</span>
+        </button>
+        <button class="option-btn" onclick="toggleOption(this, 'posiciones')">
+          <div class="option-check"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8L11 1" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <span>Centrocampista</span>
+        </button>
+        <button class="option-btn" onclick="toggleOption(this, 'posiciones')">
+          <div class="option-check"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8L11 1" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <span>Delantero</span>
+        </button>
+      </div>
+      <div class="error-msg" id="err-1">Por favor, selecciona al menos una posición</div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-nav btn-next" onclick="nextPage(1)">Siguiente →</button>
+    </div>
+  </div>
+
+  <!-- PAGE 2: Momento imparable -->
+  <div class="page" id="page-2">
+    <div class="q-card">
+      <div class="q-number">PREGUNTA 2</div>
+      <div class="q-title">Describe tu momento imparable</div>
+      <div class="q-hint">¿Cuándo te sientes en tu mejor momento en la cancha? ¿Qué sucede, qué haces, cómo te sientes?</div>
+      <textarea id="ans-2" placeholder="Escribe aquí tu mejor momento..." rows="5"></textarea>
+      <div class="error-msg" id="err-2">Este campo es obligatorio</div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-nav btn-back" onclick="prevPage(2)">← Atrás</button>
+      <button class="btn-nav btn-next" onclick="nextPage(2)">Siguiente →</button>
+    </div>
+  </div>
+
+  <!-- PAGE 3: Estado emocional -->
+  <div class="page" id="page-3">
+    <div class="q-card">
+      <div class="q-number">PREGUNTA 3</div>
+      <div class="q-title">¿Cuál es tu estado emocional deseado en la cancha?</div>
+      <div class="q-hint">Selecciona las emociones que deseas cultivar durante el partido</div>
+      <div class="options-grid" id="estado">
+        <button class="option-btn" onclick="toggleOption(this, 'estado')">
+          <div class="option-check"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8L11 1" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <span>Confiado</span>
+        </button>
+        <button class="option-btn" onclick="toggleOption(this, 'estado')">
+          <div class="option-check"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8L11 1" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <span>Agresivo (en el buen sentido)</span>
+        </button>
+        <button class="option-btn" onclick="toggleOption(this, 'estado')">
+          <div class="option-check"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8L11 1" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <span>Tranquilo y controlado</span>
+        </button>
+        <button class="option-btn" onclick="toggleOption(this, 'estado')">
+          <div class="option-check"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8L11 1" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <span>Enfocado</span>
+        </button>
+        <button class="option-btn" onclick="toggleOption(this, 'estado')">
+          <div class="option-check"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8L11 1" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <span>Energizado</span>
+        </button>
+        <button class="option-btn" onclick="toggleOption(this, 'estado')">
+          <div class="option-check"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8L11 1" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <span>Otro</span>
+        </button>
+      </div>
+      <div class="other-input" id="otro-estado">
+        <input type="text" id="otro-estado-value" placeholder="Describe tu estado deseado">
+      </div>
+      <div class="error-msg" id="err-3">Por favor, selecciona al menos un estado emocional</div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-nav btn-back" onclick="prevPage(3)">← Atrás</button>
+      <button class="btn-nav btn-next" onclick="nextPage(3)">Siguiente →</button>
+    </div>
+  </div>
+
+  <!-- PAGE 4: Acción a fortalecer -->
+  <div class="page" id="page-4">
+    <div class="q-card">
+      <div class="q-number">PREGUNTA 4</div>
+      <div class="q-title">¿Qué acción específica quieres fortalecer?</div>
+      <div class="q-hint">Puede ser una habilidad técnica, táctica o una acción específica que deseas mejorar</div>
+      <textarea id="ans-4" placeholder="Ej: Definición ante el arco, pase largo, marca defensiva..." rows="5"></textarea>
+      <div class="error-msg" id="err-4">Este campo es obligatorio</div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-nav btn-back" onclick="prevPage(4)">← Atrás</button>
+      <button class="btn-nav btn-next" onclick="nextPage(4)">Siguiente →</button>
+    </div>
+  </div>
+
+  <!-- PAGE 5: Reacción actual al error -->
+  <div class="page" id="page-5">
+    <div class="q-card">
+      <div class="q-number">PREGUNTA 5</div>
+      <div class="q-title">¿Cómo reaccionas actualmente ante los errores?</div>
+      <div class="q-hint">Sé honesto: ¿qué haces, qué sientes o qué piensas cuando cometes un error?</div>
+      <div class="options-grid" id="reaccion-actual">
+        <button class="option-btn" onclick="toggleOption(this, 'reaccion-actual')">
+          <div class="option-check"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8L11 1" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <span>Me frustro o enojo</span>
+        </button>
+        <button class="option-btn" onclick="toggleOption(this, 'reaccion-actual')">
+          <div class="option-check"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8L11 1" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <span>Me desconcentro</span>
+        </button>
+        <button class="option-btn" onclick="toggleOption(this, 'reaccion-actual')">
+          <div class="option-check"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8L11 1" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <span>Dudo de mis capacidades</span>
+        </button>
+        <button class="option-btn" onclick="toggleOption(this, 'reaccion-actual')">
+          <div class="option-check"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8L11 1" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <span>Me retiro mentalmente</span>
+        </button>
+        <button class="option-btn" onclick="toggleOption(this, 'reaccion-actual')">
+          <div class="option-check"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8L11 1" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <span>Otro</span>
+        </button>
+      </div>
+      <div class="other-input" id="otro-reaccion">
+        <input type="text" id="otro-reaccion-value" placeholder="Describe tu reacción actual">
+      </div>
+      <div class="error-msg" id="err-5">Por favor, selecciona al menos una reacción</div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-nav btn-back" onclick="prevPage(5)">← Atrás</button>
+      <button class="btn-nav btn-next" onclick="nextPage(5)">Siguiente →</button>
+    </div>
+  </div>
+
+  <!-- PAGE 6: Reacción ideal -->
+  <div class="page" id="page-6">
+    <div class="q-card">
+      <div class="q-number">PREGUNTA 6</div>
+      <div class="q-title">¿Cómo deseas reaccionar ante los errores?</div>
+      <div class="q-hint">Describe tu comportamiento, pensamiento y emoción ideales cuando cometas un error</div>
+      <textarea id="ans-6" placeholder="Escribe cómo quieres reaccionar..." rows="5"></textarea>
+      <div class="error-msg" id="err-6">Este campo es obligatorio</div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-nav btn-back" onclick="prevPage(6)">← Atrás</button>
+      <button class="btn-nav btn-next" onclick="nextPage(6)">Siguiente →</button>
+    </div>
+  </div>
+
+  <!-- PAGE 7: Frase de activación -->
+  <div class="page" id="page-7">
+    <div class="q-card">
+      <div class="q-number">PREGUNTA 7</div>
+      <div class="q-title">Tu frase de activación</div>
+      <div class="q-hint">Una frase corta (2-3 palabras) que te active mentalmente. Ej: "Voy, voy", "Ahora sí", "Imparable"</div>
+      <input type="text" id="ans-7" placeholder="Tu frase de activación">
+      <p style="font-size: 12px; color: var(--gray); margin-top: 8px;">Si no tienes una, te sugerimos una en el guion final</p>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-nav btn-back" onclick="prevPage(7)">← Atrás</button>
+      <button class="btn-nav btn-next" onclick="nextPage(7)">Siguiente →</button>
+    </div>
+  </div>
+
+  <!-- PAGE 8: Nombre -->
+  <div class="page" id="page-8">
+    <div class="q-card">
+      <div class="q-number">PREGUNTA 8</div>
+      <div class="q-title">¿Cuál es tu nombre?</div>
+      <div class="q-hint">Esto personalizará tu guion de visualización</div>
+      <input type="text" id="ans-8" placeholder="Tu nombre">
+      <div class="error-msg" id="err-8">Este campo es obligatorio</div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-nav btn-back" onclick="prevPage(8)">← Atrás</button>
+      <button class="btn-nav btn-next" onclick="nextPage(8)">Generar Guion →</button>
+    </div>
+  </div>
+
+  <!-- LOADING -->
+  <div class="page" id="page-loading">
+    <div class="loading-page">
+      <div class="spinner"></div>
+      <h3>Generando tu guion...</h3>
+      <p>Nuestro sistema está creando tu visualización mental personalizada</p>
+      <div class="loading-steps">
+        <div class="loading-step" id="ls-1">
+          <div class="loading-dot"></div>
+          <span>Procesando datos</span>
+        </div>
+        <div class="loading-step" id="ls-2">
+          <div class="loading-dot"></div>
+          <span>Generando estructura</span>
+        </div>
+        <div class="loading-step" id="ls-3">
+          <div class="loading-dot"></div>
+          <span>Personalizando contenido</span>
+        </div>
+        <div class="loading-step" id="ls-4">
+          <div class="loading-dot"></div>
+          <span>Optimizando guion</span>
+        </div>
+        <div class="loading-step" id="ls-5">
+          <div class="loading-dot"></div>
+          <span>¡Casi listo!</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULT -->
+  <div class="page" id="page-result">
+    <div class="result-header">
+      <h3>Tu guion personalizado</h3>
+      <h2 id="result-name">Jugador</h2>
+      <p>Aquí tienes tu visualización mental única</p>
+    </div>
+
+    <div class="script-card" id="script-output"></div>
+
+    <div class="instructions-card">
+      <h4>Cómo usar tu guion</h4>
+      <ul>
+        <li>Léelo en voz alta antes de cada entrenamiento</li>
+        <li>Practica la visualización 5-10 minutos antes de los partidos</li>
+        <li>Repite frecuentemente para que se integre en tu memoria muscular</li>
+        <li>Usa tu frase de activación cuando necesites un impulso mental</li>
+      </ul>
+    </div>
+
+    <button class="copy-btn" id="copyBtn" onclick="copyScript()">
+      📋 Copiar Guion
+    </button>
+
+    <button class="btn-secondary" onclick="resetForm()">Hacer otro guion</button>
+  </div>
+
+  <div class="footer">
+    <span>FC Sporting Company</span> · Psicología del Rendimiento
+  </div>
+</Layout>
+
+<script is:inline>
+  let currentPage = 0;
+  let fullScriptText = '';
+
+  function showPage(n) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + (n === 0 ? 'intro' : n === 99 ? 'loading' : n === 100 ? 'result' : n)).classList.add('active');
+    window.scrollTo(0, 0);
+
+    const progressWrap = document.getElementById('progressWrap');
+    if (n >= 1 && n <= 8) {
+      progressWrap.style.display = 'block';
+      const pct = Math.round((n / 8) * 100);
+      document.getElementById('progressFill').style.width = pct + '%';
+      document.getElementById('progressCurrent').textContent = n;
+      document.getElementById('progressPct').textContent = pct + '%';
+    } else {
+      progressWrap.style.display = 'none';
+    }
+  }
+
+  function startForm() {
+    currentPage = 1;
+    showPage(1);
+  }
+
+  function toggleOption(el, groupId, max) {
+    if (max && max === 1) return;
+    const group = document.getElementById(groupId);
+    const selected = group.querySelectorAll('.selected');
+
+    if (el.classList.contains('selected')) {
+      el.classList.remove('selected');
+    } else {
+      if (max && selected.length >= max) {
+        selected[0].classList.remove('selected');
+      }
+      el.classList.add('selected');
+    }
+
+    if (groupId === 'estado') toggleOtro('otro-estado', el);
+    if (groupId === 'reaccion-actual') toggleOtro('otro-reaccion', el);
+  }
+
+  function selectRadio(el, groupId) {
+    const group = document.getElementById(groupId);
+    group.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+
+  function toggleOtro(id, btn) {
+    const el = document.getElementById(id);
+    const btnId = id + '-btn';
+    const actualBtn = btn || document.getElementById(btnId);
+    if (actualBtn && actualBtn.classList.contains('selected')) {
+      el.classList.add('visible');
+    } else {
+      el.classList.remove('visible');
+    }
+  }
+
+  function getSelected(groupId) {
+    const group = document.getElementById(groupId);
+    if (!group) return [];
+    return Array.from(group.querySelectorAll('.selected')).map(el => el.textContent.trim());
+  }
+
+  function showError(id, show) {
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle('visible', show);
+  }
+
+  function nextPage(n) {
+    // Validate
+    if (n === 1) {
+      const selected = getSelected('posiciones');
+      if (selected.length === 0) { showError('err-1', true); return; }
+      showError('err-1', false);
+    }
+    if (n === 2) {
+      const val = document.getElementById('ans-2').value.trim();
+      if (!val) { showError('err-2', true); return; }
+      showError('err-2', false);
+    }
+    if (n === 3) {
+      const selected = getSelected('estado');
+      if (selected.length === 0) { showError('err-3', true); return; }
+      showError('err-3', false);
+    }
+    if (n === 4) {
+      const val = document.getElementById('ans-4').value.trim();
+      if (!val) { showError('err-4', true); return; }
+      showError('err-4', false);
+    }
+    if (n === 5) {
+      const selected = getSelected('reaccion-actual');
+      if (selected.length === 0) { showError('err-5', true); return; }
+      showError('err-5', false);
+    }
+    if (n === 6) {
+      const val = document.getElementById('ans-6').value.trim();
+      if (!val) { showError('err-6', true); return; }
+      showError('err-6', false);
+    }
+    if (n === 8) {
+      const val = document.getElementById('ans-8').value.trim();
+      if (!val) { showError('err-8', true); return; }
+      showError('err-8', false);
+      generateScript();
+      return;
+    }
+
+    currentPage = n + 1;
+    showPage(currentPage);
+  }
+
+  function prevPage(n) {
+    currentPage = n - 1;
+    showPage(currentPage);
+  }
+
+  function animateLoadingSteps() {
+    const steps = ['ls-1','ls-2','ls-3','ls-4','ls-5'];
+    let i = 0;
+    function next() {
+      if (i > 0) steps.forEach(s => document.getElementById(s).classList.remove('active'));
+      if (i > 0) document.getElementById(steps[i-1]).classList.add('done');
+      if (i < steps.length) {
+        document.getElementById(steps[i]).classList.add('active');
+        i++;
+        setTimeout(next, 600);
+      }
+    }
+    next();
+  }
+
+  async function generateScript() {
+    const name = document.getElementById('ans-8').value.trim();
+    if (!name) { showError('err-8', true); return; }
+    showError('err-8', false);
+
+    // Recopilación de datos del formulario
+    const posiciones = getSelected('posiciones').filter(p => p !== 'Otro').join(', ');
+    const momentoImparable = document.getElementById('ans-2').value.trim();
+
+    let estadoArr = getSelected('estado').filter(p => p !== 'Otro');
+    const otroEstadoEl = document.getElementById('otro-estado-value');
+    if (otroEstadoEl && document.getElementById('otro-estado').classList.contains('visible')) {
+      const otroVal = otroEstadoEl.value.trim();
+      if (otroVal) estadoArr.push(otroVal);
+    }
+    const estadoEmocional = estadoArr.join(' y ');
+
+    const accionFortalecer = document.getElementById('ans-4').value.trim();
+
+    let reaccionActualArr = getSelected('reaccion-actual').filter(p => p !== 'Otro');
+    const otroReacEl = document.getElementById('otro-reaccion-value');
+    if (otroReacEl && document.getElementById('otro-reaccion').classList.contains('visible')) {
+      const otroVal = otroReacEl.value.trim();
+      if (otroVal) reaccionActualArr.push(otroVal);
+    }
+    const reaccionActual = reaccionActualArr.join(', ');
+
+    const reaccionIdeal = document.getElementById('ans-6').value.trim();
+    const fraseActivacion = document.getElementById('ans-7').value.trim();
+
+    // Mostrar pantalla de carga
+    showPage(99);
+    animateLoadingSteps();
+
+    try {
+      const response = await fetch('/api/generate-script', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name,
+          posiciones,
+          momentoImparable,
+          estadoEmocional,
+          accionFortalecer,
+          reaccionActual,
+          reaccionIdeal,
+          fraseActivacion
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al generar el guion');
+      }
+
+      const data = await response.json();
+      fullScriptText = data.script;
+
+      // Procesar y mostrar el guion
+      const lines = fullScriptText.split('\n');
+      const blocks = [];
+      let currentBlock = { label: '', text: [] };
+
+      for (const line of lines) {
+        if (line.startsWith('[BLOQUE')) {
+          if (currentBlock.label) blocks.push(currentBlock);
+          currentBlock = { label: line, text: [] };
+        } else if (line.trim()) {
+          currentBlock.text.push(line);
+        }
+      }
+      if (currentBlock.label) blocks.push(currentBlock);
+
+      const scriptOutput = document.getElementById('script-output');
+      scriptOutput.innerHTML = '';
+      for (const block of blocks) {
+        const blockEl = document.createElement('div');
+        blockEl.className = 'script-block';
+        blockEl.innerHTML = `<div class="block-label">${block.label}</div><div class="block-text">${block.text.join('\n')}</div>`;
+        scriptOutput.appendChild(blockEl);
+      }
+
+      document.getElementById('result-name').textContent = name;
+      showPage(100);
+    } catch (err) {
+      console.error('Error:', err);
+      alert('Hubo un error al generar tu guion. Por favor, intenta de nuevo.');
+      currentPage = 0;
+      showPage(0);
+    }
+  }
+
+
+  function copyScript() {
+    if (!fullScriptText) return;
+    navigator.clipboard.writeText(fullScriptText).then(() => {
+      const btn = document.getElementById('copyBtn');
+      const originalText = btn.textContent;
+      btn.textContent = '✓ Copiado';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = originalText;
+        btn.classList.remove('copied');
+      }, 2500);
+    });
+  }
+
+  function resetForm() {
+    // Reset all inputs
+    document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+    document.querySelectorAll('textarea').forEach(t => t.value = '');
+    document.querySelectorAll('input[type="text"]').forEach(i => i.value = '');
+    document.querySelectorAll('.other-input').forEach(i => i.classList.remove('visible'));
+    document.querySelectorAll('.loading-step').forEach(s => { s.classList.remove('active','done'); });
+    fullScriptText = '';
+    currentPage = 0;
+    showPage(0);
+  }
+
+  // Manejar el botón "Otro" para estado emocional
+  document.addEventListener("DOMContentLoaded", () => {
+    const estadoOtroBtn = Array.from(document.querySelectorAll('#estado .option-btn')).find(
+      btn => btn.textContent.includes('Otro')
+    );
+    if (estadoOtroBtn) {
+      estadoOtroBtn.id = 'otro-estado-btn';
+      estadoOtroBtn.setAttribute('onclick', 'toggleOption(this, "estado"); toggleOtro("otro-estado", this);');
+    }
+
+    const reaccionOtroBtn = Array.from(document.querySelectorAll('#reaccion-actual .option-btn')).find(
+      btn => btn.textContent.includes('Otro')
+    );
+    if (reaccionOtroBtn) {
+      reaccionOtroBtn.id = 'otro-reaccion-btn';
+      reaccionOtroBtn.setAttribute('onclick', 'toggleOption(this, "reaccion-actual"); toggleOtro("otro-reaccion", this);');
+    }
+  });
+</script>
