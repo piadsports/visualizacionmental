@@ -5,16 +5,21 @@ import Layout from '../layouts/Layout.astro';
 <Layout>
   <div class="header">
     <div class="shield-wrap">
-      <svg class="shield shield-svg" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.95" />
-            <stop offset="100%" style="stop-color:#e8f7e7;stop-opacity:0.8" />
-          </linearGradient>
-        </defs>
-        <path d="M 50 10 L 85 30 L 85 65 Q 50 100 50 100 Q 50 100 15 65 L 15 30 Z" fill="url(#shieldGrad)" stroke="#2a8a26" stroke-width="1.5"/>
-        <text x="50" y="60" font-family="Arial, sans-serif" font-size="32" font-weight="bold" text-anchor="middle" fill="#3aaa35">S</text>
-      </svg>
+    <svg class="shield" viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg">
+      <path d="M100 5 L195 45 L195 130 Q195 200 100 235 Q5 200 5 130 L5 45 Z" fill="white" stroke="white" stroke-width="2"/>
+      <path d="M100 12 L188 50 L188 130 Q188 195 100 228 Q12 195 12 130 L12 50 Z" fill="#3aaa35"/>
+      <!-- Mountain -->
+      <path d="M30 85 L70 45 L90 65 L100 50 L130 85 Z" fill="white" opacity="0.9"/>
+      <!-- Banner -->
+      <rect x="20" y="110" width="160" height="55" fill="white" rx="2"/>
+      <text x="100" y="138" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="20" font-weight="900" fill="#3aaa35">SPORTING</text>
+      <text x="100" y="158" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="20" font-weight="900" fill="#3aaa35">COMPANY</text>
+      <!-- Bottom stripes -->
+      <rect x="30" y="170" width="28" height="40" fill="white" rx="2"/>
+      <rect x="70" y="165" width="28" height="45" fill="white" rx="2"/>
+      <rect x="102" y="165" width="28" height="45" fill="white" rx="2"/>
+      <rect x="142" y="170" width="28" height="40" fill="white" rx="2"/>
+    </svg>
     </div>
     <h1>FC Sporting Company</h1>
     <h2>Visualización Mental</h2>
@@ -35,17 +40,12 @@ import Layout from '../layouts/Layout.astro';
   <div class="page active" id="page-intro">
     <div class="intro-card">
       <h3>Bienvenido</h3>
-      <p>Este formulario te ayudará a crear tu <strong>guion personalizado de visualización mental</strong> basado en tus características como futbolista.</p>
-      <p>Responde de manera honesta y reflexiva. Te haremos 8 preguntas que nos permitirán generar un guion único para ti.</p>
+      <p>A partir de tus respuestas, vamos a generar un guion de visualización mental 100% personalizado para ti.</p>
+      <p>Responde con honestidad — cuanto más específico seas, más poderoso será tu guion.</p>
       <ul class="steps-list">
-        <li><span class="step-num">1</span> Cuéntanos tu posición en el campo</li>
-        <li><span class="step-num">2</span> Describe tu momento imparable</li>
-        <li><span class="step-num">3</span> Selecciona tu estado emocional deseado</li>
-        <li><span class="step-num">4</span> Identifica una acción a fortalecer</li>
-        <li><span class="step-num">5</span> Describe cómo reaccionas ahora ante errores</li>
-        <li><span class="step-num">6</span> Diseña tu reacción ideal ante adversidades</li>
-        <li><span class="step-num">7</span> Crea tu frase de activación</li>
-        <li><span class="step-num">8</span> Comparte tu nombre</li>
+        <li><div class="step-num">1</div><span>Completa las 8 preguntas (menos de 5 minutos)</span></li>
+      <li><div class="step-num">2</div><span>La IA genera tu guion personalizado</span></li>
+      <li><div class="step-num">3</div><span>Grábalo con tu propia voz y escúchalo cada día</span></li>
       </ul>
     </div>
     <button class="btn-primary" onclick="startForm()">Comenzar →</button>
@@ -58,29 +58,33 @@ import Layout from '../layouts/Layout.astro';
       <div class="q-title">¿Cuál es tu posición en el campo?</div>
       <div class="q-hint">Selecciona una o más posiciones en las que juegas</div>
       <div class="options-grid" id="posiciones">
-        <button class="option-btn" onclick="toggleOption(this, 'posiciones')">
+        <button class="option-btn radio-btn" onclick="selectRadio(this, 'posiciones')">
           <div class="option-check"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8L11 1" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
-          <span>Portero</span>
+          <span>Arquero</span>
         </button>
-        <button class="option-btn" onclick="toggleOption(this, 'posiciones')">
+        <button class="option-btn radio-btn" onclick="selectRadio(this, 'posiciones')">
           <div class="option-check"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8L11 1" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
           <span>Defensa Central</span>
         </button>
-        <button class="option-btn" onclick="toggleOption(this, 'posiciones')">
+        <button class="option-btn radio-btn" onclick="selectRadio(this, 'posiciones')">
           <div class="option-check"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8L11 1" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
-          <span>Lateral Izquierdo</span>
+          <span>Lateral</span>
         </button>
-        <button class="option-btn" onclick="toggleOption(this, 'posiciones')">
+        <button class="option-btn radio-btn" onclick="selectRadio(this, 'posiciones')">
           <div class="option-check"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8L11 1" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
-          <span>Lateral Derecho</span>
+          <span>Mediocampista defensivo</span>
         </button>
-        <button class="option-btn" onclick="toggleOption(this, 'posiciones')">
+        <button class="option-btn radio-btn" onclick="selectRadio(this, 'posiciones')">
           <div class="option-check"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8L11 1" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
-          <span>Centrocampista</span>
+          <span>Mediocampista ofensivo</span>
         </button>
-        <button class="option-btn" onclick="toggleOption(this, 'posiciones')">
+        <button class="option-btn radio-btn" onclick="selectRadio(this, 'posiciones')">
           <div class="option-check"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8L11 1" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
-          <span>Delantero</span>
+          <span>Extremo</span>
+        </button>
+        <button class="option-btn radio-btn" onclick="selectRadio(this, 'posiciones')">
+          <div class="option-check"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8L11 1" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <span>Delantero 9</span>
         </button>
       </div>
       <div class="error-msg" id="err-1">Por favor, selecciona al menos una posición</div>
@@ -94,9 +98,9 @@ import Layout from '../layouts/Layout.astro';
   <div class="page" id="page-2">
     <div class="q-card">
       <div class="q-number">PREGUNTA 2</div>
-      <div class="q-title">Describe tu momento imparable</div>
-      <div class="q-hint">¿Cuándo te sientes en tu mejor momento en la cancha? ¿Qué sucede, qué haces, cómo te sientes?</div>
-      <textarea id="ans-2" placeholder="Escribe aquí tu mejor momento..." rows="5"></textarea>
+      <div class="q-title">Piensa en un momento donde te sentiste imparable.</div>
+      <div class="q-hint">Puede ser dentro o fuera del fútbol. ¿Qué pasó? Descríbelo brevemente.</div>
+      <textarea id="ans-2" placeholder="Ej: En el partido contra... / Cuando entrené... / El día que..." rows="5"></textarea>
       <div class="error-msg" id="err-2">Este campo es obligatorio</div>
     </div>
     <div class="nav-buttons">
@@ -109,30 +113,30 @@ import Layout from '../layouts/Layout.astro';
   <div class="page" id="page-3">
     <div class="q-card">
       <div class="q-number">PREGUNTA 3</div>
-      <div class="q-title">¿Cuál es tu estado emocional deseado en la cancha?</div>
-      <div class="q-hint">Selecciona las emociones que deseas cultivar durante el partido</div>
+      <div class="q-title">¿Cómo quieres sentirte antes de un partido importante?</div>
+      <div class="q-hint">Elige hasta 2 opciones.</div>
       <div class="options-grid" id="estado">
-        <button class="option-btn" onclick="toggleOption(this, 'estado')">
+        <button class="option-btn" onclick="toggleOption(this, 'estado', 2)">
           <div class="option-check"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8L11 1" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
-          <span>Confiado</span>
+          <span>Tranquilo y enfocado</span>
         </button>
-        <button class="option-btn" onclick="toggleOption(this, 'estado')">
+        <button class="option-btn" onclick="toggleOption(this, 'estado', 2)">
           <div class="option-check"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8L11 1" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
-          <span>Agresivo (en el buen sentido)</span>
+          <span>Intenso y activado</span>
         </button>
-        <button class="option-btn" onclick="toggleOption(this, 'estado')">
+        <button class="option-btn" onclick="toggleOption(this, 'estado', 2)">
           <div class="option-check"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8L11 1" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
-          <span>Tranquilo y controlado</span>
+          <span>Seguro y dominante</span>
         </button>
-        <button class="option-btn" onclick="toggleOption(this, 'estado')">
+        <button class="option-btn" onclick="toggleOption(this, 'estado', 2)">
           <div class="option-check"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8L11 1" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
-          <span>Enfocado</span>
+          <span>Liviano y disfrutando</span>
         </button>
-        <button class="option-btn" onclick="toggleOption(this, 'estado')">
+        <button class="option-btn" onclick="toggleOption(this, 'estado', 2)">
           <div class="option-check"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8L11 1" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
-          <span>Energizado</span>
+          <span>Concentrado y determinado</span>
         </button>
-        <button class="option-btn" onclick="toggleOption(this, 'estado')">
+        <button class="option-btn" onclick="toggleOption(this, 'estado', 2); toggleOtro('otro-estado', this);">
           <div class="option-check"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8L11 1" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
           <span>Otro</span>
         </button>
@@ -152,9 +156,9 @@ import Layout from '../layouts/Layout.astro';
   <div class="page" id="page-4">
     <div class="q-card">
       <div class="q-number">PREGUNTA 4</div>
-      <div class="q-title">¿Qué acción específica quieres fortalecer?</div>
-      <div class="q-hint">Puede ser una habilidad técnica, táctica o una acción específica que deseas mejorar</div>
-      <textarea id="ans-4" placeholder="Ej: Definición ante el arco, pase largo, marca defensiva..." rows="5"></textarea>
+      <div class="q-title">¿Qué acción de tu juego quieres fortalecer mentalmente?</div>
+      <div class="q-hint">Ej: penaltis, duelos aéreos, primer toque bajo presión, definición, salidas, pelotas divididas...</div>
+      <textarea id="ans-4" placeholder="Escribe la acción o situación que quieres trabajar..." rows="3"></textarea>
       <div class="error-msg" id="err-4">Este campo es obligatorio</div>
     </div>
     <div class="nav-buttons">
@@ -167,26 +171,26 @@ import Layout from '../layouts/Layout.astro';
   <div class="page" id="page-5">
     <div class="q-card">
       <div class="q-number">PREGUNTA 5</div>
-      <div class="q-title">¿Cómo reaccionas actualmente ante los errores?</div>
-      <div class="q-hint">Sé honesto: ¿qué haces, qué sientes o qué piensas cuando cometes un error?</div>
+      <div class="q-title">Cuando cometes un error en un partido, ¿qué pasa en tu cabeza?</div>
+      <div class="q-hint">Elige una opción.</div>
       <div class="options-grid" id="reaccion-actual">
-        <button class="option-btn" onclick="toggleOption(this, 'reaccion-actual')">
+        <button class="option-btn radio-btn" onclick="selectRadio(this, 'reaccion-actual')">
           <div class="option-check"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8L11 1" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
-          <span>Me frustro o enojo</span>
+          <span>Me bloqueo y me cuesta salir</span>
         </button>
-        <button class="option-btn" onclick="toggleOption(this, 'reaccion-actual')">
+        <button class="option-btn radio-btn" onclick="selectRadio(this, 'reaccion-actual')">
           <div class="option-check"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8L11 1" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
-          <span>Me desconcentro</span>
+          <span>Me enojo conmigo mismo</span>
         </button>
-        <button class="option-btn" onclick="toggleOption(this, 'reaccion-actual')">
+        <button class="option-btn radio-btn" onclick="selectRadio(this, 'reaccion-actual')">
           <div class="option-check"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8L11 1" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
-          <span>Dudo de mis capacidades</span>
+          <span>Lo suelto rápido y sigo</span>
         </button>
-        <button class="option-btn" onclick="toggleOption(this, 'reaccion-actual')">
+        <button class="option-btn radio-btn" onclick="selectRadio(this, 'reaccion-actual')">
           <div class="option-check"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8L11 1" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
-          <span>Me retiro mentalmente</span>
+          <span>Depende del momento del partido</span>
         </button>
-        <button class="option-btn" onclick="toggleOption(this, 'reaccion-actual')">
+        <button class="option-btn radio-btn" onclick="selectRadio(this, 'reaccion-actual'); toggleOtro('otro-reaccion', this);">
           <div class="option-check"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8L11 1" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
           <span>Otro</span>
         </button>
@@ -194,7 +198,7 @@ import Layout from '../layouts/Layout.astro';
       <div class="other-input" id="otro-reaccion">
         <input type="text" id="otro-reaccion-value" placeholder="Describe tu reacción actual">
       </div>
-      <div class="error-msg" id="err-5">Por favor, selecciona al menos una reacción</div>
+      <div class="error-msg" id="err-5">Por favor, selecciona una reacción</div>
     </div>
     <div class="nav-buttons">
       <button class="btn-nav btn-back" onclick="prevPage(5)">← Atrás</button>
@@ -206,9 +210,9 @@ import Layout from '../layouts/Layout.astro';
   <div class="page" id="page-6">
     <div class="q-card">
       <div class="q-number">PREGUNTA 6</div>
-      <div class="q-title">¿Cómo deseas reaccionar ante los errores?</div>
-      <div class="q-hint">Describe tu comportamiento, pensamiento y emoción ideales cuando cometas un error</div>
-      <textarea id="ans-6" placeholder="Escribe cómo quieres reaccionar..." rows="5"></textarea>
+      <div class="q-title">Después de un error, ¿cómo quieres reaccionar idealmente?</div>
+      <div class="q-hint">Ej: respirar, hablarme bien, buscar el balón, levantar la cabeza, seguir jugando...</div>
+      <textarea id="ans-6" placeholder="Describe tu reacción ideal después de un error..." rows="3"></textarea>
       <div class="error-msg" id="err-6">Este campo es obligatorio</div>
     </div>
     <div class="nav-buttons">
@@ -221,10 +225,9 @@ import Layout from '../layouts/Layout.astro';
   <div class="page" id="page-7">
     <div class="q-card">
       <div class="q-number">PREGUNTA 7</div>
-      <div class="q-title">Tu frase de activación</div>
-      <div class="q-hint">Una frase corta (2-3 palabras) que te active mentalmente. Ej: "Voy, voy", "Ahora sí", "Imparable"</div>
-      <input type="text" id="ans-7" placeholder="Tu frase de activación">
-      <p style="font-size: 12px; color: var(--gray); margin-top: 8px;">Si no tienes una, te sugerimos una en el guion final</p>
+      <div class="q-title">¿Tienes una frase o palabra para activarte mentalmente?</div>
+      <div class="q-hint">Opcional. Si no tienes una, déjalo en blanco y te ayudaremos a construir una.</div>
+      <textarea id="ans-7" rows="3" placeholder="Ej: 'Soy fuerte', 'Al siguiente', 'Ahora'... o déjalo en blanco"></textarea>
     </div>
     <div class="nav-buttons">
       <button class="btn-nav btn-back" onclick="prevPage(7)">← Atrás</button>
@@ -337,7 +340,6 @@ import Layout from '../layouts/Layout.astro';
   }
 
   function toggleOption(el, groupId, max) {
-    if (max && max === 1) return;
     const group = document.getElementById(groupId);
     const selected = group.querySelectorAll('.selected');
 
@@ -350,14 +352,15 @@ import Layout from '../layouts/Layout.astro';
       el.classList.add('selected');
     }
 
-    if (groupId === 'estado') toggleOtro('otro-estado', el);
-    if (groupId === 'reaccion-actual') toggleOtro('otro-reaccion', el);
+    if (groupId === 'estado') toggleOtro('otro-estado');
+    if (groupId === 'reaccion-actual') toggleOtro('otro-reaccion');
   }
 
   function selectRadio(el, groupId) {
     const group = document.getElementById(groupId);
     group.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
     el.classList.add('selected');
+    if (groupId === 'reaccion-actual') toggleOtro('otro-reaccion');
   }
 
   function toggleOtro(id, btn) {
@@ -566,14 +569,13 @@ import Layout from '../layouts/Layout.astro';
     showPage(0);
   }
 
-  // Manejar el botón "Otro" para estado emocional
+  // Manejar el botón "Otro" para estado emocional y reacción actual
   document.addEventListener("DOMContentLoaded", () => {
     const estadoOtroBtn = Array.from(document.querySelectorAll('#estado .option-btn')).find(
       btn => btn.textContent.includes('Otro')
     );
     if (estadoOtroBtn) {
       estadoOtroBtn.id = 'otro-estado-btn';
-      estadoOtroBtn.setAttribute('onclick', 'toggleOption(this, "estado"); toggleOtro("otro-estado", this);');
     }
 
     const reaccionOtroBtn = Array.from(document.querySelectorAll('#reaccion-actual .option-btn')).find(
@@ -581,7 +583,6 @@ import Layout from '../layouts/Layout.astro';
     );
     if (reaccionOtroBtn) {
       reaccionOtroBtn.id = 'otro-reaccion-btn';
-      reaccionOtroBtn.setAttribute('onclick', 'toggleOption(this, "reaccion-actual"); toggleOtro("otro-reaccion", this);');
     }
   });
 </script>
